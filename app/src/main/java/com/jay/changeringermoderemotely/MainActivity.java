@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    private void method(){
+    private void changeProfile(){
         AudioManager am= (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
         //For Normal mode
         am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
