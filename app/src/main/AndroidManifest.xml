@@ -25,7 +25,13 @@
         <activity
             android:name=".CreatePinActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ConfirmPinActivity"></activity>
+        <activity
+            android:name=".ConfirmPinActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".PinLoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".DashboardActivity"></activity>
     </application>
 
 </manifest>

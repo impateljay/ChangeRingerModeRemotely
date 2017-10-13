@@ -1,5 +1,7 @@
 package com.jay.changeringermoderemotely;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.security.KeyPairGeneratorSpec;
@@ -50,7 +52,13 @@ public class CreatePinActivity extends AppCompatActivity {
     private PinLockListener mPinLockListener = new PinLockListener() {
         @Override
         public void onComplete(String pin) {
-
+            SharedPreferences sharedPreferences = getSharedPreferences("PIN", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("InitialPin", pin);
+            editor.apply();
+            Intent intent = new Intent(CreatePinActivity.this, ConfirmPinActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         @Override

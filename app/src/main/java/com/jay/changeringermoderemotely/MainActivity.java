@@ -2,12 +2,13 @@ package com.jay.changeringermoderemotely;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -21,9 +22,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, CreatePinActivity.class);
-        finish();
-        startActivity(intent);
+        SharedPreferences sharedPreferences = getSharedPreferences("PIN", MODE_PRIVATE);
+        if (sharedPreferences.getString("SecretCode", null) == null) {
+            Intent intent = new Intent(MainActivity.this, CreatePinActivity.class);
+            finish();
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(MainActivity.this, PinLoginActivity.class);
+            finish();
+            startActivity(intent);
+        }
     }
 
     private void changeProfile(){

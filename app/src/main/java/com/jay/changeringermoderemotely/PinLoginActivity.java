@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -16,36 +15,28 @@ import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
 import com.andrognito.pinlockview.PinLockView;
 
-public class ConfirmPinActivity extends AppCompatActivity {
+public class PinLoginActivity extends AppCompatActivity {
 
-    private static String TAG = "TAG_";
     private PinLockListener mPinLockListener = new PinLockListener() {
         @Override
         public void onComplete(String pin) {
             SharedPreferences sharedPreferences = getSharedPreferences("PIN", MODE_PRIVATE);
-            String sharedPreferencesPin = sharedPreferences.getString("InitialPin", null);
-            final SharedPreferences.Editor editor = sharedPreferences.edit();
-            if (pin.equals(sharedPreferencesPin)) {
-                editor.putString("SecretCode", pin);
-                editor.apply();
-                Intent intent = new Intent(ConfirmPinActivity.this, DashboardActivity.class);
+            if (pin.equals(sharedPreferences.getString("SecretCode", null))) {
+                Intent intent = new Intent(PinLoginActivity.this, DashboardActivity.class);
                 startActivity(intent);
                 finish();
             } else {
-
                 AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    builder = new AlertDialog.Builder(ConfirmPinActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                    builder = new AlertDialog.Builder(PinLoginActivity.this, android.R.style.Theme_Material_Dialog_Alert);
                 } else {
-                    builder = new AlertDialog.Builder(ConfirmPinActivity.this);
+                    builder = new AlertDialog.Builder(PinLoginActivity.this);
                 }
-                builder.setTitle("Pincode does not match")
+                builder.setTitle("Incorrect Pincode")
 //                        .setMessage("Pincode does not match")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                editor.putString("InitialPin", null);
-                                editor.apply();
-                                Intent intent = new Intent(ConfirmPinActivity.this, CreatePinActivity.class);
+                                Intent intent = new Intent(PinLoginActivity.this, PinLoginActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
@@ -62,12 +53,10 @@ public class ConfirmPinActivity extends AppCompatActivity {
 
         @Override
         public void onEmpty() {
-            Log.d(TAG, "Pin empty");
         }
 
         @Override
         public void onPinChange(int pinLength, String intermediatePin) {
-            Log.d(TAG, "Pin changed, new length " + pinLength + " with intermediate pin " + intermediatePin);
         }
     };
 
@@ -76,7 +65,7 @@ public class ConfirmPinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_confirm_pin);
+        setContentView(R.layout.activity_pin_login);
 
         PinLockView mPinLockView = (PinLockView) findViewById(R.id.pin_lock_view);
         IndicatorDots mIndicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
