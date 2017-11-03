@@ -9,11 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -24,24 +22,31 @@ import java.util.List;
 public class DashboardActivity extends AppCompatActivity {
 
     private static final int RESULT_PICK_CONTACT = 100;
-    private RecyclerView recyclerView;
     private ContactsAdapter adapter;
-    private List<Contact> albumList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        albumList = new ArrayList<>();
-        adapter = new ContactsAdapter(this, albumList);
+        adapter = new ContactsAdapter(this);
+        adapter.albumList = new ArrayList<>();
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(DashboardActivity.this, ContactDetailsActivity.class);
+                intent.putExtra("contact_id", adapter.albumList.get(position).getId());
+                startActivity(intent);
+            }
+        }));
 
         prepareContacts();
 
@@ -65,22 +70,12 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void prepareContacts() {
-        Contact a = new Contact("True Romance", "9876543210");
-        albumList.add(a);
-
-        a = new Contact("Loud", "9876543210");
-        albumList.add(a);
-
-        a = new Contact("Legend", "9876543210");
-        albumList.add(a);
-
         List<Contact> contacts = Contact.getAllContacts();
         if (contacts != null && contacts.size() > 0) {
-            albumList.addAll(contacts);
+            adapter.albumList.addAll(contacts);
         } else {
-            albumList = new ArrayList<>();
+            adapter.albumList = new ArrayList<>();
         }
-
         adapter.notifyDataSetChanged();
     }
 
@@ -95,21 +90,17 @@ public class DashboardActivity extends AppCompatActivity {
                     contactPicked(data);
                     break;
             }
-        } else {
-            Log.e("MainActivity", "Failed to pick contact");
         }
     }
 
     /**
      * Query the Uri and read contact details. Handle the picked contact data.
-     *
-     * @param data
      */
     private void contactPicked(Intent data) {
         Cursor cursor = null;
         try {
-            String phoneNo = null;
-            String name = null;
+            String phoneNo;
+            String name;
             // getData() method will have the Content Uri of the selected contact
             Uri uri = data.getData();
             //Query the content uri
@@ -122,14 +113,10 @@ public class DashboardActivity extends AppCompatActivity {
                 int nameIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
                 phoneNo = cursor.getString(phoneIndex);
                 name = cursor.getString(nameIndex);
-                Toast.makeText(DashboardActivity.this, "Name : " + name + "\nPhone No. : " + phoneNo, Toast.LENGTH_LONG).show();
                 Contact contact = new Contact(name, phoneNo);
-//                contact.save();
-                albumList.add(new Contact(name, phoneNo));
+                contact.save();
+                adapter.albumList.add(new Contact(name, phoneNo));
                 adapter.notifyDataSetChanged();
-                // Set the value to the textviews
-//            textView1.setText(name);
-//            textView2.setText(phoneNo);
             }
         } catch (Exception e) {
             e.printStackTrace();

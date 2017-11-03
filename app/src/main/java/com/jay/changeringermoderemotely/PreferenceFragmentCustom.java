@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.SwitchPreferenceCompat;
-import android.widget.Toast;
 
 /**
  * Created by jaypatel on 03/11/17.
@@ -30,7 +29,6 @@ public class PreferenceFragmentCustom extends PreferenceFragmentCompat {
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putBoolean("canChangeProfile", (Boolean) newValue);
                 editor.apply();
-                Toast.makeText(getActivity(), newValue.toString(), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

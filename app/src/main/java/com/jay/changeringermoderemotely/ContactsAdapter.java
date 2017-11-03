@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -20,23 +19,21 @@ import java.util.List;
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyViewHolder> {
 
+    List<Contact> albumList;
     private Context mContext;
-    private List<Contact> albumList;
 
-    ContactsAdapter(Context mContext, List<Contact> albumList) {
+    ContactsAdapter(Context mContext) {
         this.mContext = mContext;
-        this.albumList = albumList;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_card, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         Contact album = albumList.get(position);
         holder.title.setText(album.getName());
         holder.count.setText(album.getPhoneNumber());
@@ -44,7 +41,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopupMenu(holder.overflow);
+                showPopupMenu(holder.overflow, position);
             }
         });
     }
@@ -52,12 +49,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
     /**
      * Showing popup menu when tapping on 3 dots
      */
-    private void showPopupMenu(View view) {
+    private void showPopupMenu(View view, int position) {
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.menu_contact, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(position));
         popup.show();
     }
 
@@ -82,15 +79,21 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
      * Click listener for popup menu items
      */
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+        private int position;
 
-        MyMenuItemClickListener() {
+        MyMenuItemClickListener(int position) {
+            this.position = position;
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
                 case R.id.action_delete:
-                    Toast.makeText(mContext, "Delete clicked", Toast.LENGTH_SHORT).show();
+                    Contact contact = albumList.get(position);
+                    contact.delete();
+                    albumList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, albumList.size());
                     return true;
                 default:
             }

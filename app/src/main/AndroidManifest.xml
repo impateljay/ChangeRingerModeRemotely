@@ -36,6 +36,7 @@
         <activity
             android:name=".SettingsActivity"
             android:theme="@style/SettingsTheme" />
+        <activity android:name=".ContactDetailsActivity"></activity>
     </application>
 
 </manifest>

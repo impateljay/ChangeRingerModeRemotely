@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ChangeRingerModeRemotely.iml" filepath="$PROJECT_DIR$/ChangeRingerModeRemotely.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ChangeRingerModeRemotely.iml" filepath="$PROJECT_DIR$/ChangeRingerModeRemotely.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ChangeRingerModeRemotely-master.iml" filepath="$PROJECT_DIR$/ChangeRingerModeRemotely-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\Android\Projects\ChangeRingerModeRemotely\ChangeRingerModeRemotely-master.iml" filepath="D:\Android\Projects\ChangeRingerModeRemotely\ChangeRingerModeRemotely-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
