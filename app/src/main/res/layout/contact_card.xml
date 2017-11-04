@@ -22,8 +22,12 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/album_title_padding_right"
+                android:layout_marginRight="@dimen/album_title_padding_right"
+                android:paddingEnd="@dimen/album_title_padding_right"
                 android:paddingLeft="@dimen/album_title_padding"
-                android:paddingRight="@dimen/album_title_padding"
+                android:paddingRight="@dimen/album_title_padding_right"
+                android:paddingStart="@dimen/album_title_padding"
                 android:paddingTop="@dimen/album_title_padding"
                 android:textColor="@color/album_title"
                 android:textSize="@dimen/album_title" />
@@ -33,9 +37,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
+                android:layout_marginEnd="@dimen/album_title_padding_right"
+                android:layout_marginRight="@dimen/album_title_padding_right"
                 android:paddingBottom="@dimen/songs_count_padding_bottom"
+                android:paddingEnd="@dimen/album_title_padding_right"
                 android:paddingLeft="@dimen/album_title_padding"
-                android:paddingRight="@dimen/album_title_padding"
+                android:paddingRight="@dimen/album_title_padding_right"
+                android:paddingStart="@dimen/album_title_padding"
                 android:textSize="@dimen/songs_count" />
 
             <ImageView

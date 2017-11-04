@@ -39,15 +39,6 @@ public class DashboardActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(DashboardActivity.this, ContactDetailsActivity.class);
-                intent.putExtra("contact_id", adapter.albumList.get(position).getId());
-                startActivity(intent);
-            }
-        }));
-
         prepareContacts();
 
         final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);

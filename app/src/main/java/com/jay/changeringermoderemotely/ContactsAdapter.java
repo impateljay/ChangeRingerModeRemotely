@@ -1,6 +1,7 @@
 package com.jay.changeringermoderemotely;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,6 +39,22 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
         holder.title.setText(album.getName());
         holder.count.setText(album.getPhoneNumber());
 
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ContactDetailsActivity.class);
+                intent.putExtra("contact_id", albumList.get(position).getId());
+                mContext.startActivity(intent);
+            }
+        });
+        holder.count.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ContactDetailsActivity.class);
+                intent.putExtra("contact_id", albumList.get(position).getId());
+                mContext.startActivity(intent);
+            }
+        });
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
