@@ -36,12 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeProfile(){
         AudioManager am= (AudioManager) getBaseContext().getSystemService(Context.AUDIO_SERVICE);
-        //For Normal mode
-        am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-        //For Silent mode
-        am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-        //For Vibrate mode
-        am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+        if (am != null) {
+            //For Normal mode
+            am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            //For Silent mode
+            am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            //For Vibrate mode
+            am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+        }
     }
 
     public void sendSMS(String phoneNo, String msg) {
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Query the Uri and read contact details. Handle the picked contact data.
-     * @param data
+     * @param data intent
      */
     private void contactPicked(Intent data) {
         Cursor cursor = null;
@@ -89,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
             // getData() method will have the Content Uri of the selected contact
             Uri uri = data.getData();
             //Query the content uri
-            cursor = getContentResolver().query(uri, null, null, null, null);
+            if (uri != null) {
+                cursor = getContentResolver().query(uri, null, null, null, null);
+            }
             if (cursor != null) {
                 cursor.moveToFirst();
                 // column index of the phone number

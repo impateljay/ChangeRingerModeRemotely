@@ -25,7 +25,7 @@ public class PreferenceFragmentCustom extends PreferenceFragmentCompat {
         preferenceGroup.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                SharedPreferences pref = getContext().getSharedPreferences("Preferences", Context.MODE_PRIVATE); // 0 - for private mode
+                SharedPreferences pref = getContext().getSharedPreferences("Preferences", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putBoolean("canChangeProfile", (Boolean) newValue);
                 editor.apply();

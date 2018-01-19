@@ -6,7 +6,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 
 /**
- * Created by jaypatel on 03/11/17.
+ * Created by jaypatel on 03/11/17
  */
 
 public class MyApplication extends Application {

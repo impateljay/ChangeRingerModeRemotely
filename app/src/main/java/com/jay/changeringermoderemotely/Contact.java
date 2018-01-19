@@ -8,7 +8,7 @@ import com.activeandroid.query.Select;
 import java.util.List;
 
 /**
- * Created by jaypatel on 03/11/17.
+ * Created by jaypatel on 03/11/17
  */
 
 @Table(name = "Contact")
@@ -21,13 +21,17 @@ public class Contact extends Model {
     public Contact() {
     }
 
-    public Contact(String name, String phoneNumber) {
+    Contact(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public static List<Contact> getAllContacts() {
+    static List<Contact> getAllContacts() {
         return new Select().from(Contact.class).execute();
+    }
+
+    static boolean checkPhoneNumberExists(String phoneNumber) {
+        return new Select().from(Contact.class).where("phoneNumber = ?", phoneNumber).executeSingle() != null;
     }
 
     public String getName() {
@@ -38,11 +42,7 @@ public class Contact extends Model {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
+    String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }

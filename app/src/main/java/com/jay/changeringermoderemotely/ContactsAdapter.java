@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by jaypatel on 03/11/17.
+ * Created by jaypatel on 03/11/17
  */
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyViewHolder> {
@@ -86,9 +86,9 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
 
         MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            count = (TextView) view.findViewById(R.id.count);
-            overflow = (ImageView) view.findViewById(R.id.overflow);
+            title = view.findViewById(R.id.title);
+            count = view.findViewById(R.id.count);
+            overflow = view.findViewById(R.id.overflow);
         }
     }
 
